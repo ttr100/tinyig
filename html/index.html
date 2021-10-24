@@ -5,7 +5,13 @@
   <p>Followed by {{followerCount}}</p>
   <p>Following {{followingCount}}</p>
 
-  <p>Followers : {{followers}}</p>
+  {{#if hasFollower }}
+  <ul>
+    {{#each followersList}}
+      <li>{{ this.name }} ID IS: {{ this.id }}</li>
+    {{/each}}
+  </ul>
+  {{/if}}
 
   <h2>Goodbye</h2>
 </body>

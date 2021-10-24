@@ -12,25 +12,36 @@ const fs = require('fs');
 const path = require('path');
 const handlebars = require("handlebars");
 
+function handlebarRender(content, data){
+  const renderer = handlebars.compile(content);
+  return renderer(data);
+}
+
 function html(fileName, data){
   let targetFile = path.join('html', fileName);
   let exist = fs.existsSync(targetFile)
   if(exist){
     let content = fs.readFileSync(targetFile, 'utf-8');
-    const template = handlebars.compile(content);
-    return template(data);
+    return handlebarRender(content, data);
   }
 
   return `File not found ${fileName}`;
 }
 
 app.get('/', function(req, res){
-  let followers = ['alice', 'bob', 'charlie'].join(',');
+  let followers = [
+    {name: 'alice', id: 1},
+    {name: 'bob', id: 2},
+    {name: 'charlie', id: 3}
+  ]
+
+  let followerCount = 0;
   let data = {
     name: 'Bob',
-    followerCount: 20,
+    followerCount: followerCount,
     followingCount: 20,
-    followers: followers
+    hasFollower: followerCount > 0,
+    followersList: followers
   }
   let response = html('index.html', data)
   res.send(response);
