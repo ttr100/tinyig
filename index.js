@@ -11,11 +11,18 @@ const port = 3000;
 const fs = require('fs');
 const path = require('path');
 
-function html(fileName){
+function html(fileName, data){
   let targetFile = path.join('html', fileName);
   let exist = fs.existsSync(targetFile)
   if(exist){
     let content = fs.readFileSync(targetFile, 'utf-8');
+    let keys = Object.keys(data);
+    for(let i=0;i<keys.length;i++){
+      let currentKey = keys[i]; // name
+      let replacementKey = `#${currentKey}#` // #name#
+      let value = data[currentKey]; // 'Alice'
+      content = content.replace(replacementKey, value);
+    }
     return content
   }
 
@@ -23,7 +30,12 @@ function html(fileName){
 }
 
 app.get('/', function(req, res){
-  let response = html('index.html')
+  let data = {
+    name: 'Bob',
+    followerCount: 20,
+    followingCount: 20
+  }
+  let response = html('index.html', data)
   res.send(response);
 })
 
