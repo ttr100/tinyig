@@ -60,7 +60,7 @@ app.get('/register', function(req, res){
   res.send(response);
 })
 
-let users = [];
+let users = []; // {username: 'b;a', password: 'bla'}
 app.post('/register', function(req, res){
   users.push(req.body);
   res.redirect('/');
@@ -68,6 +68,15 @@ app.post('/register', function(req, res){
 
 app.post('/login', function(req, res){
   // do login
+  // req.body // {username: asfafa, password: asfasfa}
+  for(let i=0; i<users.length;i++){
+    if(req.body.loginusername === users[i].username && req.body.loginpassword === users[i].password){
+      res.redirect('/home')
+      return;
+    }
+  }
+
+  res.redirect('/')
 })
 
 app.get('/home', function(req, res){
