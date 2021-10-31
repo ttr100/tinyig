@@ -17,10 +17,18 @@ function handlebarRender(content, data){
   return renderer(data);
 }
 
+function registerHtmlPartial(partialName, fileName){
+  let targetFile = path.join('html/partials', fileName);
+  let content = fs.readFileSync(targetFile, 'utf-8');
+
+  handlebars.registerPartial(partialName, content)
+}
+
 function html(fileName, data){
   let targetFile = path.join('html', fileName);
   let exist = fs.existsSync(targetFile)
   if(exist){
+    registerHtmlPartial('headPartial', 'head.html');
     let content = fs.readFileSync(targetFile, 'utf-8');
     return handlebarRender(content, data);
   }
