@@ -1,21 +1,49 @@
 <html>
-
   {{> headPartial }}
 
-<body>
-  <h1>Hello, {{name}}</h1>
-  <p>Followed by {{followerCount}}</p>
-  <p>Following {{followingCount}}</p>
+  <body>
+    <style>
+      .registrationForm {
+        width: 500px;
+      }
+      .formContainer {
+        display: flex;
+        justify-content: center;
+        padding-top: 100px;
+      }
+    </style>
+    <div class="formContainer">
+      <div class="registrationForm">
+        <form method="POST" action="/register">
+          <div class="field">
+            <label class="label">Username</label>
+            <div class="control">
+              <input name="username" class="input" type="text" placeholder="Enter username" />
+            </div>
+          </div>
 
-  {{#if hasFollower }}
-  <ul>
-    {{#each followersList}}
-      <li>{{ this.name }} ID IS: {{ this.id }}</li>
-    {{/each}}
-  </ul>
-  {{/if}}
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input
+                name="password"
+                class="input"
+                type="password"
+                placeholder="Enter password"
+              />
+            </div>
+          </div>
 
-  <h2>Goodbye</h2>
-</body>
-
+          <div class="field is-grouped">
+            <div class="control">
+              <button type="submit" class="button is-link">Login</button>
+            </div>
+          </div>
+        </form>
+        <div class="is-size-5">
+          <a href="/register">Don't have account? Sign up here</a>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
