@@ -66,6 +66,14 @@ app.post('/register', function(req, res){
   res.redirect('/');
 })
 
+app.post('/login', function(req, res){
+  // do login
+})
+
+app.get('/home', function(req, res){
+  res.send('Welcome, registered user')
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
