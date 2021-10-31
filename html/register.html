@@ -14,25 +14,32 @@
     </style>
     <div class="formContainer">
       <div class="registrationForm">
-        <div class="field">
-          <label class="label">Username</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Enter username" />
+        <form method="POST" action="/register">
+          <div class="field">
+            <label class="label">Username</label>
+            <div class="control">
+              <input name="username" class="input" type="text" placeholder="Enter username" />
+            </div>
           </div>
-        </div>
 
-        <div class="field">
-          <label class="label">Password</label>
-          <div class="control">
-            <input class="input" type="password" placeholder="Enter password" />
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input
+                name="password"
+                class="input"
+                type="password"
+                placeholder="Enter password"
+              />
+            </div>
           </div>
-        </div>
 
-        <div class="field is-grouped">
-          <div class="control">
-            <button class="button is-link">Register</button>
+          <div class="field is-grouped">
+            <div class="control">
+              <button type="submit" class="button is-link">Register</button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </body>

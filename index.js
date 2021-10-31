@@ -60,6 +60,12 @@ app.get('/register', function(req, res){
   res.send(response);
 })
 
+let users = [];
+app.post('/register', function(req, res){
+  users.push(req.body);
+  res.redirect('/');
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
