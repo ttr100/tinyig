@@ -14,6 +14,9 @@
     </style>
     <div class="formContainer">
       <div class="registrationForm">
+        <div class="notification is-danger">
+          {{ errorMessage }}
+        </div>
         <form method="POST" action="/login">
           <div class="field">
             <label class="label">Username</label>

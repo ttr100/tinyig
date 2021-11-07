@@ -37,19 +37,8 @@ function html(fileName, data){
 }
 
 app.get('/', function(req, res){
-  let followers = [
-    {name: 'alice', id: 1},
-    {name: 'bob', id: 2},
-    {name: 'charlie', id: 3}
-  ]
-
-  let followerCount = 0;
   let data = {
-    name: 'Bob',
-    followerCount: followerCount,
-    followingCount: 20,
-    hasFollower: followerCount > 0,
-    followersList: followers
+    errorMessage: 'Unable to login'
   }
   let response = html('index.html', data)
   res.send(response);
@@ -67,8 +56,6 @@ app.post('/register', function(req, res){
 })
 
 app.post('/login', function(req, res){
-  // do login
-  // req.body // {username: asfafa, password: asfasfa}
   for(let i=0; i<users.length;i++){
     if(req.body.loginusername === users[i].username && req.body.loginpassword === users[i].password){
       res.redirect('/home')
