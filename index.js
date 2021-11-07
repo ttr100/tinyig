@@ -7,10 +7,10 @@ app.use(cookieParser());
 
 const port = 3000;
 
-
 const fs = require('fs');
 const path = require('path');
 const handlebars = require("handlebars");
+const users = require('./users');
 
 function handlebarRender(content, data){
   const renderer = handlebars.compile(content);
@@ -56,24 +56,30 @@ app.get('/register', function(req, res){
   res.send(response);
 })
 
-let users = []; // {username: 'b;a', password: 'bla'}
 app.post('/register', function(req, res){
-  users.push(req.body);
-  res.cookie('loggedInUser', req.body.username)
-  res.redirect('/');
+  let user = users.registerUser(req.body.username, req.body.password);
+
+  if(user){
+    res.cookie('loggedInUser', user.username)
+    res.redirect('/');
+  }
+  else{
+    res.cookie('errorMessage', 'Unable to register')
+    res.redirect('/register');
+  }
 })
 
 app.post('/login', function(req, res){
-  for(let i=0; i<users.length;i++){
-    if(req.body.loginusername === users[i].username && req.body.loginpassword === users[i].password){
-      res.cookie('loggedInUser', users[i].username);
-      res.redirect('/home')
-      return;
-    }
+  let user = users.authenticateUser(req.body.loginusername, req.body.loginpassword)
+  if(user){
+    res.cookie('loggedInUser', user.username);
+    res.redirect('/home')
+    return;
   }
-
-  res.cookie('errorMessage', 'Unable to login')
-  res.redirect('/')
+  else{
+    res.cookie('errorMessage', 'Unable to login')
+    res.redirect('/')
+  }
 })
 
 app.get('/home', function(req, res){
