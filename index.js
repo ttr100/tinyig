@@ -37,6 +37,11 @@ function html(fileName, data){
 }
 
 app.get('/', function(req, res){
+  if(req.cookies.isLoggedIn){
+    res.redirect('/home')
+    return
+  }
+
   let errorMessage = req.cookies.errorMessage;
   res.clearCookie('errorMessage');
   let data = {
@@ -54,12 +59,14 @@ app.get('/register', function(req, res){
 let users = []; // {username: 'b;a', password: 'bla'}
 app.post('/register', function(req, res){
   users.push(req.body);
+  res.cookie('isLoggedIn', 'username')
   res.redirect('/');
 })
 
 app.post('/login', function(req, res){
   for(let i=0; i<users.length;i++){
     if(req.body.loginusername === users[i].username && req.body.loginpassword === users[i].password){
+      res.cookie('isLoggedIn', users[i].username);
       res.redirect('/home')
       return;
     }
@@ -70,6 +77,11 @@ app.post('/login', function(req, res){
 })
 
 app.get('/home', function(req, res){
+  if(!req.cookies.isLoggedIn){
+    res.cookie('errorMessage', 'Please login first')
+    res.redirect('/')
+    return
+  }
   res.send('Welcome, registered user')
 })
 
