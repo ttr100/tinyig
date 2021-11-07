@@ -82,8 +82,11 @@ app.get('/home', function(req, res){
     res.redirect('/')
     return
   }
-  console.log('username is', req.cookies.loggedInUser);
-  res.send('Welcome, registered user')
+  let data = {
+    currentUser : req.cookies.loggedInUser
+  }
+  let content = html('home.html', data)
+  res.send(content)
 })
 
 app.listen(port, () => {
