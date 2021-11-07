@@ -37,8 +37,10 @@ function html(fileName, data){
 }
 
 app.get('/', function(req, res){
+  let errorMessage = req.cookies.errorMessage;
+  res.clearCookie('errorMessage');
   let data = {
-    errorMessage: 'Unable to login'
+    errorMessage: errorMessage
   }
   let response = html('index.html', data)
   res.send(response);
@@ -63,6 +65,7 @@ app.post('/login', function(req, res){
     }
   }
 
+  res.cookie('errorMessage', 'Unable to login')
   res.redirect('/')
 })
 
