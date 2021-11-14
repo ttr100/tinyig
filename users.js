@@ -22,6 +22,7 @@ function readFromFile(){
 }
 
 // return user object if successful,
+// Server side validation
 function registerUser(username, password){
   let user = {
     username: username,

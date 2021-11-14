@@ -23,7 +23,7 @@
           <div class="field">
             <label class="label">Username</label>
             <div class="control">
-              <input name="username" class="input" type="text" placeholder="Enter username" />
+              <input required name="username" class="input" type="text" placeholder="Enter username" />
             </div>
           </div>
 
@@ -31,6 +31,8 @@
             <label class="label">Password</label>
             <div class="control">
               <input
+                required
+                minlength="5"
                 name="password"
                 class="input"
                 type="password"
