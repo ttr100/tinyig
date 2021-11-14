@@ -14,10 +14,11 @@ function storeToFile(users){
 }
 
 function readFromFile(){
-  // read FILE_NAME
-  // JSON.parse isi file
-  // dapatkan property users
-  // users = data.users
+  if(fs.existsSync(FILE_NAME)){
+    let fileContent = fs.readFileSync(FILE_NAME, 'utf-8');
+    let parsedData = JSON.parse(fileContent);
+    users = parsedData.users;
+  }
 }
 
 // return user object if successful,
