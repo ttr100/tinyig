@@ -26,7 +26,12 @@ app.get('/', function(req, res){
 })
 
 app.get('/register', function(req, res){
-  let response = html.render('register.html')
+  let errorMessage = req.cookies.errorMessage;
+  res.clearCookie('errorMessage');
+  let data = {
+    errorMessage: errorMessage
+  }
+  let response = html.render('register.html', data)
   res.send(response);
 })
 

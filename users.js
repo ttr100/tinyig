@@ -24,10 +24,26 @@ function readFromFile(){
 // return user object if successful,
 // return null if fail
 function registerUser(username, password){
+  // check if username exist -> return null
+  // check of username dan password is not empty -> return null
   let user = {
     username: username,
     password: password
   }
+
+  if(user.username.length == 0 || user.password.length < 5)
+  {
+    return null;
+  }
+
+  for(let i = 0; i < users.length; i++)
+  {
+    if(user.username == users[i].username)
+    {
+      return null;
+    }
+  }
+
   users.push(user)
 
   storeToFile(users);
