@@ -1,3 +1,6 @@
+const users = require('./users');
+const html = require('./html');
+
 const express = require('express');
 var cookieParser = require('cookie-parser')
 const app = express();
@@ -6,35 +9,6 @@ app.use(express.raw());
 app.use(cookieParser());
 
 const port = 3000;
-
-const fs = require('fs');
-const path = require('path');
-const handlebars = require("handlebars");
-const users = require('./users');
-
-function handlebarRender(content, data){
-  const renderer = handlebars.compile(content);
-  return renderer(data);
-}
-
-function registerHtmlPartial(partialName, fileName){
-  let targetFile = path.join('html/partials', fileName);
-  let content = fs.readFileSync(targetFile, 'utf-8');
-
-  handlebars.registerPartial(partialName, content)
-}
-
-function html(fileName, data){
-  let targetFile = path.join('html', fileName);
-  let exist = fs.existsSync(targetFile)
-  if(exist){
-    registerHtmlPartial('headPartial', 'head.html');
-    let content = fs.readFileSync(targetFile, 'utf-8');
-    return handlebarRender(content, data);
-  }
-
-  return `File not found ${fileName}`;
-}
 
 app.get('/', function(req, res){
   if(req.cookies.loggedInUser){
@@ -47,12 +21,12 @@ app.get('/', function(req, res){
   let data = {
     errorMessage: errorMessage
   }
-  let response = html('index.html', data)
+  let response = html.render('index.html', data)
   res.send(response);
 })
 
 app.get('/register', function(req, res){
-  let response = html('register.html')
+  let response = html.render('register.html')
   res.send(response);
 })
 
@@ -91,7 +65,7 @@ app.get('/home', function(req, res){
   let data = {
     currentUser : req.cookies.loggedInUser
   }
-  let content = html('home.html', data)
+  let content = html.render('home.html', data)
   res.send(content)
 })
 
