@@ -13,6 +13,13 @@ function storeToFile(users){
   fs.writeFileSync(FILE_NAME, stringToStore);
 }
 
+function readFromFile(){
+  // read FILE_NAME
+  // JSON.parse isi file
+  // dapatkan property users
+  // users = data.users
+}
+
 // return user object if successful,
 // return null if fail
 function registerUser(username, password){
@@ -38,6 +45,7 @@ function authenticateUser(username, password){
   return null;
 }
 
+readFromFile();
 
 module.exports = {
   registerUser: registerUser,
