@@ -36,14 +36,14 @@ app.get('/register', function(req, res){
 })
 
 app.post('/register', function(req, res){
-  let user = users.registerUser(req.body.username, req.body.password);
+  let result = users.registerUser(req.body.username, req.body.password);
 
-  if(user){
-    res.cookie('loggedInUser', user.username)
+  if(result.isSuccess){
+    res.cookie('loggedInUser', result.user.username)
     res.redirect('/');
   }
   else{
-    res.cookie('errorMessage', 'Unable to register')
+    res.cookie('errorMessage', result.errorMessage)
     res.redirect('/register');
   }
 })

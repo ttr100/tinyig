@@ -22,32 +22,45 @@ function readFromFile(){
 }
 
 // return user object if successful,
-// return null if fail
 function registerUser(username, password){
-  // check if username exist -> return null
-  // check of username dan password is not empty -> return null
   let user = {
     username: username,
     password: password
   }
 
-  if(user.username.length == 0 || user.password.length < 5)
+  if(user.password.length < 5)
   {
-    return null;
+    return {
+      isSuccess: false,
+      errorMessage: "Password has to be at least 5 chars"
+    }
+  }
+
+  if(user.username.length == 0){
+    return {
+      isSuccess: false,
+      errorMessage: "Username is required"
+    }
   }
 
   for(let i = 0; i < users.length; i++)
   {
     if(user.username == users[i].username)
     {
-      return null;
+      return {
+        isSuccess: false,
+        errorMessage: "Username has been taken"
+      }
     }
   }
 
   users.push(user)
 
   storeToFile(users);
-  return user
+  return {
+    isSuccess: true,
+    user: user
+  }
 }
 
 // return user object if successful,
