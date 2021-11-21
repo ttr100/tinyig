@@ -27,7 +27,7 @@ function html(fileName, data){
     return handlebarRender(content, data);
   }
 
-  return `File not found ${fileName}`;
+  return `Given file not found ${fileName}`;
 }
 
 module.exports = {
