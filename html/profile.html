@@ -1,8 +1,9 @@
 <html>
   {{> headPartial }}
   <body>
-    Welcome, {{ currentUser }}
-    <h1>You are on profile</h1>
-    {{> navigationBar }}
+    {{#> layout }}
+      <h1>You are on profile</h1>
+      {{> navigationBar }}
+    {{/ layout }}
   </body>
 </html>

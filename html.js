@@ -21,6 +21,13 @@ function html(fileName, data){
     registerHtmlPartial('headPartial', 'head.html');
     registerHtmlPartial('navigationBar', 'navigationBar.html');
 
+    handlebars.registerPartial('layout', `
+      <div class="container">
+        Welcome, {{ currentUser }}
+        {{> @partial-block }}
+      </div>
+    `)
+
     let content = fs.readFileSync(targetFile, 'utf-8');
     return handlebarRender(content, data);
   }
