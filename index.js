@@ -74,6 +74,33 @@ app.get('/home', function(req, res){
   res.send(content)
 })
 
+app.get('/upload', function(req, res){
+  if(!req.cookies.loggedInUser){
+    res.cookie('errorMessage', 'Please login first')
+    res.redirect('/')
+    return
+  }
+  let data = {
+    currentUser : req.cookies.loggedInUser
+  }
+  let content = html.render('upload.html', data)
+  res.send(content)
+});
+
+app.get('/profile', function(req, res){
+  if(!req.cookies.loggedInUser){
+    res.cookie('errorMessage', 'Please login first')
+    res.redirect('/')
+    return
+  }
+  let data = {
+    currentUser : req.cookies.loggedInUser
+  }
+  let content = html.render('profile.html', data)
+  res.send(content)
+});
+
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })

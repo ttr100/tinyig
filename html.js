@@ -19,6 +19,8 @@ function html(fileName, data){
   let exist = fs.existsSync(targetFile)
   if(exist){
     registerHtmlPartial('headPartial', 'head.html');
+    registerHtmlPartial('navigationBar', 'navigationBar.html');
+
     let content = fs.readFileSync(targetFile, 'utf-8');
     return handlebarRender(content, data);
   }
