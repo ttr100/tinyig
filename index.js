@@ -61,6 +61,13 @@ app.post('/login', function(req, res){
   }
 })
 
+app.post('/logout', function(req, res){
+  // TODO: Remove cookie
+  console.log('LOGGING OUT')
+  res.cookie('errorMessage', 'You have logged out.')
+  res.redirect('/')
+})
+
 app.get('/home', function(req, res){
   if(!req.cookies.loggedInUser){
     res.cookie('errorMessage', 'Please login first')

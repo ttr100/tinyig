@@ -1,4 +1,7 @@
 <div class="container">
   Welcome, {{ currentUser }}
+  <form method="post" action="/logout">
+    <button type="submit" class="button">Logout</button>
+  </form>
   {{> @partial-block }}
 </div>
