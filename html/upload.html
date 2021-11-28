@@ -3,10 +3,33 @@
   <body>
     {{#> layout }}
       {{> navigationBar }}
-      <form method="post" action="/upload" enctype="multipart/form-data">
-        <input type="file" name="img"/>
+      <form
+        method="post"
+        action="/upload"
+        enctype="multipart/form-data">
+        <input
+          accept=".png"
+          type="file"
+          name="img"/>
+        <input
+          type="text"
+          name="caption" />
         <button class="button">Upload</button>
       </form>
+
+
+    {{#each uploads}}
+    <div>
+      Path: {{this.path}}
+    </div>
+    <div>
+      Filename: {{this.filename}}
+    </div>
+    <div>
+      caption: {{this.caption}}
+    </div>
+    {{/each}}
+
     {{/ layout }}
   </body>
 </html>

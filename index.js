@@ -5,10 +5,13 @@ const multer  = require('multer');
 const express = require('express');
 var cookieParser = require('cookie-parser')
 const upload = multer({ dest: 'uploads/' });
+
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.raw());
 app.use(cookieParser());
+
+app.use('/uploads', express.static('uploads'))
 
 const port = 3000;
 
@@ -82,14 +85,18 @@ app.get('/home', function(req, res){
   res.send(content)
 })
 
+let images = [];
+
 app.get('/upload', function(req, res){
   if(!req.cookies.loggedInUser){
     res.cookie('errorMessage', 'Please login first')
     res.redirect('/')
     return
   }
+
   let data = {
-    currentUser : req.cookies.loggedInUser
+    currentUser : req.cookies.loggedInUser,
+    uploads: images,
   }
   let content = html.render('upload.html', data)
   res.send(content)
@@ -97,6 +104,14 @@ app.get('/upload', function(req, res){
 
 app.post('/upload', upload.single('img'), function(req, res){
   console.log(req.file);
+  console.log(req.body);
+  let newUpload = {
+    path: req.file.path,
+    filename: req.file.originalname,
+    caption: req.body.caption
+  };
+  images.push(newUpload);
+
   res.redirect('/upload');
 })
 
