@@ -62,8 +62,7 @@ app.post('/login', function(req, res){
 })
 
 app.post('/logout', function(req, res){
-  // TODO: Remove cookie
-  console.log('LOGGING OUT')
+  res.clearCookie('loggedInUser');
   res.cookie('errorMessage', 'You have logged out.')
   res.redirect('/')
 })
