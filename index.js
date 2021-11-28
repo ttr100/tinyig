@@ -110,7 +110,7 @@ app.post('/upload', upload.single('img'), function(req, res){
   };
   images.push(newUpload);
 
-  res.redirect('/upload');
+  res.redirect('/profile');
 })
 
 app.get('/profile', function(req, res){
@@ -120,7 +120,8 @@ app.get('/profile', function(req, res){
     return
   }
   let data = {
-    currentUser : req.cookies.loggedInUser
+    currentUser : req.cookies.loggedInUser,
+    uploads: images
   }
   let content = html.render('profile.html', data)
   res.send(content)
