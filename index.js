@@ -103,8 +103,6 @@ app.get('/upload', function(req, res){
 });
 
 app.post('/upload', upload.single('img'), function(req, res){
-  console.log(req.file);
-  console.log(req.body);
   let newUpload = {
     path: req.file.path,
     filename: req.file.originalname,
