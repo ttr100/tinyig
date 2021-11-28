@@ -3,6 +3,10 @@
   <body>
     {{#> layout }}
       {{> navigationBar }}
+      <form method="post" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="img"/>
+        <button class="button">Upload</button>
+      </form>
     {{/ layout }}
   </body>
 </html>

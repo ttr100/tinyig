@@ -1,8 +1,10 @@
 const users = require('./users');
 const html = require('./html');
+const multer  = require('multer');
 
 const express = require('express');
 var cookieParser = require('cookie-parser')
+const upload = multer({ dest: 'uploads/' });
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.raw());
@@ -92,6 +94,11 @@ app.get('/upload', function(req, res){
   let content = html.render('upload.html', data)
   res.send(content)
 });
+
+app.post('/upload', upload.single('img'), function(req, res){
+  console.log(req.file);
+  res.redirect('/upload');
+})
 
 app.get('/profile', function(req, res){
   if(!req.cookies.loggedInUser){
