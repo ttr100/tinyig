@@ -1,4 +1,5 @@
 const users = require('./users');
+const uploads = require('./uploads');
 const html = require('./html');
 const multer  = require('multer');
 
@@ -110,6 +111,13 @@ app.post('/upload', upload.single('img'), function(req, res){
   };
   images.push(newUpload);
 
+  // uploads.createNewUpload(
+  //   req.cookies.loggedInUser,
+  //   req.file.path,
+  //   req.file.originalname,
+  //   req.body.caption
+  // )
+
   res.redirect('/profile');
 })
 
@@ -119,10 +127,16 @@ app.get('/profile', function(req, res){
     res.redirect('/')
     return
   }
+
   let data = {
     currentUser : req.cookies.loggedInUser,
     uploads: images
   }
+
+  // let data = {
+  //   currentUser : req.cookies.loggedInUser,
+  //   uploads: uploads.getUploadedFiles(req.cookies.loggedInUser)
+  // }
   let content = html.render('profile.html', data)
   res.send(content)
 });
