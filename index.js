@@ -86,8 +86,6 @@ app.get('/home', function(req, res){
   res.send(content)
 })
 
-let images = [];
-
 app.get('/upload', function(req, res){
   if(!req.cookies.loggedInUser){
     res.cookie('errorMessage', 'Please login first')
@@ -97,26 +95,19 @@ app.get('/upload', function(req, res){
 
   let data = {
     currentUser : req.cookies.loggedInUser,
-    uploads: images,
+    uploads: uploads.getUploadedFiles(req.cookies.loggedInUser)
   }
   let content = html.render('upload.html', data)
   res.send(content)
 });
 
 app.post('/upload', upload.single('img'), function(req, res){
-  let newUpload = {
-    path: req.file.path,
-    filename: req.file.originalname,
-    caption: req.body.caption
-  };
-  images.push(newUpload);
-
-  // uploads.createNewUpload(
-  //   req.cookies.loggedInUser,
-  //   req.file.path,
-  //   req.file.originalname,
-  //   req.body.caption
-  // )
+  uploads.createNewUpload(
+    req.cookies.loggedInUser,
+    req.file.path,
+    req.file.originalname,
+    req.body.caption
+  )
 
   res.redirect('/profile');
 })
@@ -130,13 +121,9 @@ app.get('/profile', function(req, res){
 
   let data = {
     currentUser : req.cookies.loggedInUser,
-    uploads: images
+    uploads: uploads.getUploadedFiles(req.cookies.loggedInUser)
   }
 
-  // let data = {
-  //   currentUser : req.cookies.loggedInUser,
-  //   uploads: uploads.getUploadedFiles(req.cookies.loggedInUser)
-  // }
   let content = html.render('profile.html', data)
   res.send(content)
 });
