@@ -7,15 +7,59 @@
         method="post"
         action="/upload"
         enctype="multipart/form-data">
-        <input
-          accept=".png"
-          type="file"
-          name="img"/>
-        <input
-          type="text"
-          name="caption" />
-        <button class="button">Upload</button>
+
+        <div class="field">
+          <label class="label">File</label>
+          <div class="control">
+            <div id="image-upload" class="file">
+              <label class="file-label">
+                <input
+                  accept=".png"
+                  class="file-input"
+                  type="file"
+                  name="img">
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                  <span class="file-label">
+                    Choose an image
+                  </span>
+                </span>
+              </label>
+              <span class="file-name">
+                Image.png
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Caption</label>
+          <div class="control">
+            <input
+              placeholder="Enter caption"
+              class="input"
+              type="text"
+              name="caption" />
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <button class="button">Upload</button>
+          </div>
+        </div>
       </form>
     {{/ layout }}
+    <script>
+      const fileInput = document.querySelector('#image-upload input[type=file]');
+      fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+          const fileName = document.querySelector('#image-upload .file-name');
+          fileName.textContent = fileInput.files[0].name;
+        }
+      }
+    </script>
   </body>
 </html>
