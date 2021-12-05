@@ -3,6 +3,7 @@ let images = [];
 
 function createNewUpload(username, filePath, originalFileName, caption){
   let newUpload = {
+    username: username,
     path: filePath,
     filename: originalFileName,
     caption: caption

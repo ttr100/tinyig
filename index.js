@@ -95,7 +95,6 @@ app.get('/upload', function(req, res){
 
   let data = {
     currentUser : req.cookies.loggedInUser,
-    uploads: uploads.getUploadedFiles(req.cookies.loggedInUser)
   }
   let content = html.render('upload.html', data)
   res.send(content)
