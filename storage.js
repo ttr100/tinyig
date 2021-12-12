@@ -8,14 +8,14 @@ class DataStore {
     if(fs.existsSync(this.filename)){
       let fileContent = fs.readFileSync(this.filename, 'utf-8');
       let parsedData = JSON.parse(fileContent);
-      this.data = parsedData.uploads;
+      this.data = parsedData.data;
     }
   }
 
   push(newEntry){
     this.data.push(newEntry);
     let objectToStore = {
-      uploads: this.data
+      data: this.data
     }
 
     let stringToStore = JSON.stringify(objectToStore);

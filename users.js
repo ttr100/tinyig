@@ -1,25 +1,6 @@
-const fs = require('fs');
+const store = require('./storage');
 
-let users = [];
-
-let FILE_NAME = 'users.data';
-
-function storeToFile(users){
-  let objectToStore = {
-    users: users
-  }
-
-  let stringToStore = JSON.stringify(objectToStore);
-  fs.writeFileSync(FILE_NAME, stringToStore);
-}
-
-function readFromFile(){
-  if(fs.existsSync(FILE_NAME)){
-    let fileContent = fs.readFileSync(FILE_NAME, 'utf-8');
-    let parsedData = JSON.parse(fileContent);
-    users = parsedData.users;
-  }
-}
+let users = new store.DataStore('users.data');
 
 // return user object if successful,
 // Server side validation
@@ -44,9 +25,10 @@ function registerUser(username, password){
     }
   }
 
-  for(let i = 0; i < users.length; i++)
+  let allUsers = users.getAll();
+  for(let i = 0; i < allUsers.length; i++)
   {
-    if(user.username == users[i].username)
+    if(user.username == allUsers[i].username)
     {
       return {
         isSuccess: false,
@@ -56,8 +38,6 @@ function registerUser(username, password){
   }
 
   users.push(user)
-
-  storeToFile(users);
   return {
     isSuccess: true,
     user: user
@@ -67,16 +47,15 @@ function registerUser(username, password){
 // return user object if successful,
 // return null if fail
 function authenticateUser(username, password){
-  for(let i=0; i<users.length;i++){
-    if(username === users[i].username && password === users[i].password){
-      return users[i];
+  let allUsers = users.getAll();
+  for(let i=0; i<allUsers.length;i++){
+    if(username === allUsers[i].username && password === allUsers[i].password){
+      return allUsers[i];
     }
   }
 
   return null;
 }
-
-readFromFile();
 
 module.exports = {
   registerUser: registerUser,
