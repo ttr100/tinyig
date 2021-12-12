@@ -1,25 +1,6 @@
-const fs = require('fs');
+const store = require('./storage');
 
-let FILE_NAME = 'uploads.txt';
-let images = [];
-
-function storeToFile(data){
-  let objectToStore = {
-    uploads: data
-  }
-
-  let stringToStore = JSON.stringify(objectToStore);
-  fs.writeFileSync(FILE_NAME, stringToStore);
-}
-
-function readFromFile(){
-  if(fs.existsSync(FILE_NAME)){
-    let fileContent = fs.readFileSync(FILE_NAME, 'utf-8');
-    let parsedData = JSON.parse(fileContent);
-    images = parsedData.uploads;
-  }
-}
-
+let images = new store.DataStore('uploads.txt');
 
 function createNewUpload(username, filePath, originalFileName, caption){
   let newUpload = {
@@ -28,15 +9,13 @@ function createNewUpload(username, filePath, originalFileName, caption){
     filename: originalFileName,
     caption: caption
   };
+
   images.push(newUpload);
-  storeToFile(images);
 }
 
 function getUploadedFiles(username){
-  return images;
+  return images.getAll();
 }
-
-readFromFile();
 
 module.exports = {
   createNewUpload: createNewUpload,
